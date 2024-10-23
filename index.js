@@ -1,20 +1,20 @@
-// index.js
-require('dotenv').config();
 const express = require('express');
-const connectDB = require('./config/db');  // Ensure the path is correct
 const recipeRoutes = require('./routes/recipeRoutes');
+const connectDB = require('./config/db'); // Import the connectDB function
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Middleware to parse JSON
+// Middleware
 app.use(express.json());
 
-// Connect to MongoDB
-connectDB();  // This should call the function without error
+// Initialize MongoDB connection
+connectDB();
 
-// Use the recipe routes
-app.use('/api', recipeRoutes);
+// Use recipe routes
+app.use('/api/recipes', recipeRoutes);
 
 // Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
